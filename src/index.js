@@ -14,9 +14,10 @@ const {getMovies} = require('./api.js');
 
 
 getMovies().then((movies) => {
-  $('.container').text('Here are all the movies:');
+  $('#loading_screen').text(`Here are all the movies: `);
+  console.table(movies);
   movies.forEach(({title, rating, id}) => {
-    console.log(`id#${id} - ${title} - rating: ${rating}`);
+    $('#movies').append(`id#${id} - ${title} - rating: ${rating}<br>`);
   });
 }).catch((error) => {
   alert('Oh no! Something went wrong.\nCheck the console for details.');

@@ -8,13 +8,20 @@
 <body>
 
     <div class="container">
-        <h1>Hello There!</h1>
-        <p>To get started, edit <code>src/index.js</code>.</p>
+        <div id="loading_screen">
+            <h1>Your movies are coming right up!</h1><span class="loading__author"> - Your lovers</span>
+
+            <section class="loading">Loading... <br>
+                <img src="slack.png">
+                <span class="loading__anim"></span>
+            </section>
+        </div>
+
+        <div id="movies"></div>
     </div>
 
-    <section class="loading">Loading... <br>
-        <span class="loading__anim"></span>
-    </section>
+
+
 
     <script src="/main.js"></script>
 </body>
