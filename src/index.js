@@ -5,6 +5,15 @@ const $ = require('jquery');
 import sayHello from './hello';
 sayHello('World');
 
+// $.ajax({
+//     url: 'http:www.omdbapi.com/?apikey=dd57b49&',
+//     type: 'GET',
+//     dataType: 'jsonp',
+//     success: function(data){
+//         console.log(data);
+//     }
+// });
+//dd57b49
 /**
  * require style imports
  */
@@ -94,6 +103,12 @@ $('#movieSubmit').click(function(e){
     e.preventDefault();
     addAMovie();
 });
+
+// imdb.search({
+//     name: 'Toxic Avenger'
+// }, {
+//     apiKey: 'dd57b49'
+// }).then(console.log).catch(console.log);
 
 $('#movies').on('click', '.delete', function (){
     deleteAMovie($(this).val());

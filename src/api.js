@@ -31,6 +31,25 @@ module.exports = {
             .then(function(response) {
                 return response.json();
             })
-    }
+    },
+
+        editMovie: function (id) {
+            const edit = {
+
+            };
+            const url = `/api/movies/${id}`;
+            const options = {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(movie),
+            };
+
+            return fetch(url, options)
+                .then(function(response) {
+                    return response.json();
+                })
+        }
 };
 
