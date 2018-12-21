@@ -8,7 +8,7 @@ sayHello('World');
 /**
  * require style imports
  */
-const {getMovies, addMovie} = require('./api.js');
+const {getMovies, addMovie, deleteMovie} = require('./api.js');
 
 // On page load:
 //
@@ -23,15 +23,32 @@ const {getMovies, addMovie} = require('./api.js');
     });
 
 function renderMovies (movies) {
+        $("#movies").html('');
         $('#loading_screen').html(`<h2>Here are all the movies: </h2>`);
         movies.forEach(({title, rating, id}) => {
-            $('#movies').append(`id#${id} - ${title} - rating: ${rating}<br>`);
+            $('#movies').append(
+            `<div class="card">
+                <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+            <p class="card-text">ID # ${id}</p>
+            <p class="card-text">Rating: ${rating}</p>
+            <button class="delete btn btn-primary" value="${id}">Delete</button>
+            </div>
+            </div>`)
         });
 }
 
 function appendMovie(movie) {
     const {id, title, rating} = movie;
-    $('#movies').append(`id#${id} - ${title} - rating: ${rating}<br>`);
+    $('#movies').append(
+        `<div class="card">
+                <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+            <p class="card-text">ID # ${id}</p>
+            <p class="card-text">Rating: ${rating}</p>
+            <button class="delete btn btn-primary" value="${id}">Delete</button>
+            </div>
+            </div>`);
 }
 
 // Allow users to add new movies
@@ -56,29 +73,38 @@ function addAMovie() {
 // Each movie should have a "delete" button
 // When this button is clicked, your javascript should send a DELETE request
 
-function deleteAMovie(id) {
+function deleteAMovie(num) {
+    const {id} = num;
+    deleteMovie(num)
+        .then(function(){
+            getMovies().then((movies) => {
+                renderMovies (movies);
+                console.table(movies);
+            }).catch((error) => {
+                alert('Oh no! Something went wrong.\nCheck the console for details.');
+                console.log(error);
+            });
+        })
+        .catch((error) => {
+            alert(error);
+        })
+};
 
-}
-
-$('#ratingSubmit').click(function(e){
+$('#movieSubmit').click(function(e){
     e.preventDefault();
     addAMovie();
 });
 
-$('#deleteButton').click(function(e){
-    e.preventDefault();
-    deleteAMovie();
+$('#movies').on('click', '.delete', function (){
+    deleteAMovie($(this).val());
 });
-
-
-
-
 
 // Allow users to edit existing movies
 //
 // Give users the option to edit an existing movie
 // A form should be pre-populated with the selected movie's details
 // Like creating a movie, this should not involve any page reloads, instead your javascript code should make an ajax request when the form is submitted.
+
 
 
 //
