@@ -1,5 +1,4 @@
 const $ = require('jquery');
-console.log($);
 /**
  * es6 modules and imports
  */
@@ -9,47 +8,70 @@ sayHello('World');
 /**
  * require style imports
  */
-const {getMovies} = require('./api.js');
+const {getMovies, addMovie} = require('./api.js');
 
 // On page load:
 //
 // Make an ajax request to get a listing of all the movies
 // When the initial ajax request comes back, remove the "loading..." message and replace it with html generated from the json response your code receives
-
-function renderMovies () {
     getMovies().then((movies) => {
-        $('#loading_screen').text(`Here are all the movies: `);
+        renderMovies (movies);
         console.table(movies);
-        movies.forEach(({title, rating, id}) => {
-            $('#movies').append(`id#${id} - ${title} - rating: ${rating}<br>`);
-        });
     }).catch((error) => {
         alert('Oh no! Something went wrong.\nCheck the console for details.');
         console.log(error);
     });
-};
 
-const newMovie = {title: "I Love You, Man", rating: 5};
-const url = 'db.json';
-const options = {
-    method: 'PUT',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newMovie),
-};
-fetch(url, options)
-    .then(renderMovies())
-    .catch((error) => {
-        alert(error);
-});
+function renderMovies (movies) {
+        $('#loading_screen').html(`<h2>Here are all the movies: </h2>`);
+        movies.forEach(({title, rating, id}) => {
+            $('#movies').append(`id#${id} - ${title} - rating: ${rating}<br>`);
+        });
+}
 
-
+function appendMovie(movie) {
+    const {id, title, rating} = movie;
+    $('#movies').append(`id#${id} - ${title} - rating: ${rating}<br>`);
+}
 
 // Allow users to add new movies
 //
 // Create a form for adding a new movie that has fields for the movie's title and rating
 // When the form is submitted, the page should not reload / refresh, instead, your javascript should make a POST request to /api/movies with the information the user put into the form
+
+function addAMovie() {
+    const newMovie = {title: newTitle.value, rating: newRating.value};
+    addMovie(newMovie)
+    .then(function (movie){
+        console.log(movie);
+        appendMovie(movie);
+    })
+        .catch((error) => {
+            alert(error);
+        });
+}
+
+// Delete movies
+//
+// Each movie should have a "delete" button
+// When this button is clicked, your javascript should send a DELETE request
+
+function deleteAMovie(id) {
+
+}
+
+$('#ratingSubmit').click(function(e){
+    e.preventDefault();
+    addAMovie();
+});
+
+$('#deleteButton').click(function(e){
+    e.preventDefault();
+    deleteAMovie();
+});
+
+
+
 
 
 // Allow users to edit existing movies
@@ -57,14 +79,12 @@ fetch(url, options)
 // Give users the option to edit an existing movie
 // A form should be pre-populated with the selected movie's details
 // Like creating a movie, this should not involve any page reloads, instead your javascript code should make an ajax request when the form is submitted.
+
+
 //
-//     Delete movies
-//
-// Each movie should have a "delete" button
-// When this button is clicked, your javascript should send a DELETE request
 // Bonuses
 // Add a disabled attribute to buttons while their corresponding ajax request is still pending.
-//     Show a loading animation instead of just text that says "loading..."
+// Show a loading animation instead of just text that says "loading..."
 // Use modals for the creating and editing movie forms
 // Add a genre property to every movie
 // Allow users to sort the movies by rating, title, or genre (if you have it)
