@@ -11,23 +11,39 @@ sayHello('World');
  */
 const {getMovies} = require('./api.js');
 
-
-
-getMovies().then((movies) => {
-  $('#loading_screen').text(`Here are all the movies: `);
-  console.table(movies);
-  movies.forEach(({title, rating, id}) => {
-    $('#movies').append(`id#${id} - ${title} - rating: ${rating}<br>`);
-  });
-}).catch((error) => {
-  alert('Oh no! Something went wrong.\nCheck the console for details.');
-  console.log(error);
-});
-
 // On page load:
 //
 // Make an ajax request to get a listing of all the movies
 // When the initial ajax request comes back, remove the "loading..." message and replace it with html generated from the json response your code receives
+
+function renderMovies () {
+    getMovies().then((movies) => {
+        $('#loading_screen').text(`Here are all the movies: `);
+        console.table(movies);
+        movies.forEach(({title, rating, id}) => {
+            $('#movies').append(`id#${id} - ${title} - rating: ${rating}<br>`);
+        });
+    }).catch((error) => {
+        alert('Oh no! Something went wrong.\nCheck the console for details.');
+        console.log(error);
+    });
+};
+
+const newMovie = {title: "I Love You, Man", rating: 5};
+const url = 'db.json';
+const options = {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newMovie),
+};
+fetch(url, options)
+    .then(renderMovies())
+    .catch((error) => {
+        alert(error);
+});
+
 
 
 // Allow users to add new movies

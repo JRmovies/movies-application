@@ -1,20 +1,13 @@
-html, body {
-    height: 100%;
+*{
+    box-sizing: border-box;
 }
 
-/*.container {*/
-    /*position: relative;*/
-    /*top: 50%;*/
-    /*transform: translateY(-100%);*/
-    /*text-align: center;*/
-/*}*/
-
 .container {
-    display: flex;
+    width: 80%;
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 100vh;
+    margin: 0 auto;
 }
 
 .loading__author {
@@ -26,7 +19,7 @@ html, body {
 }
 
 .loading {
-    max-width: 50%;
+    width: 100%;
     line-height: 1.4;
     font-size: 1.2rem;
     font-weight: bold;
