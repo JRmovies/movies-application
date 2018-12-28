@@ -5,15 +5,6 @@ const $ = require('jquery');
 import sayHello from './hello';
 sayHello('World');
 
-// $.ajax({
-//     url: 'http:www.omdbapi.com/?apikey=dd57b49&',
-//     type: 'GET',
-//     dataType: 'jsonp',
-//     success: function(data){
-//         console.log(data);
-//     }
-// });
-//dd57b49
 /**
  * require style imports
  */
@@ -104,15 +95,34 @@ $('#movieSubmit').click(function(e){
     addAMovie();
 });
 
-// imdb.search({
-//     name: 'Toxic Avenger'
-// }, {
-//     apiKey: 'dd57b49'
-// }).then(console.log).catch(console.log);
-
 $('#movies').on('click', '.delete', function (){
     deleteAMovie($(this).val());
 });
+
+$('#searchForm').on('submit', function(e){
+   e.preventDefault();
+   let searchText = $('#searchText').val();
+    console.log(searchText);
+    searchMovie(searchText);
+});
+
+
+//The search is still not working.  I'm getting the error message that "Something went wrong" back from the server... nothing specific
+//I think I've pulled about the other half of the hair I have left just trying to get this one done right...
+
+function searchMovie(searchText){
+    $.ajax({
+    url: 'http://www.omdbapi.com/?apikey=[apikey]&?t='+ searchText + '&plot=full',
+    type: 'GET',
+    success: function(data){
+        console.table(data);
+    },
+    error: function(){
+        alert(error);
+    }
+});
+
+}
 
 // Allow users to edit existing movies
 //
