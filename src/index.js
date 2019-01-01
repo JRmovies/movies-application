@@ -110,19 +110,19 @@ $('#searchForm').on('submit', function(e){
 //The search is still not working.  I'm getting the error message that "Something went wrong" back from the server... nothing specific
 //I think I've pulled about the other half of the hair I have left just trying to get this one done right...
 
-// function searchMovie(searchText){
-//     $.ajax({
-//     url: 'http://www.omdbapi.com/?apikey=[apikey]&?t='+ searchText + '&plot=full',
-//     type: 'GET',
-//     success: function(data){
-//         console.table(data);
-//     },
-//     error: function(){
-//         alert(error);
-//     }
-// });
-//
-// }
+function searchMovie(searchText){
+    $.ajax({
+    url: 'http://www.omdbapi.com/?s='+ searchText + '&plot=full' + '&apikey=dd57b49',
+    type: 'GET',
+    success: function(data){
+        console.table(data);
+    },
+    error: function(){
+        alert(error);
+    }
+});
+
+}
 
 // Allow users to edit existing movies
 //
