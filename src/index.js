@@ -112,7 +112,7 @@ $('#searchForm').on('submit', function(e){
 
 function searchMovie(searchText){
     $.ajax({
-    url: 'http://www.omdbapi.com/?s='+ searchText + '&plot=full' + '&apikey=dd57b49',
+    url: 'http://www.omdbapi.com/?s='+ searchText + '&plot=full' + '&apikey=',
     type: 'GET',
     success: function(data){
         console.table(data);
