@@ -13,7 +13,7 @@
 .loading__author {
     font-weight: normal;
     font-size: 0.9rem;
-    color: rgba(189,189,189 ,1);
+    color: rgba(189, 189, 189, 1);
     margin: 0.6rem 0 2rem 0;
     display: block;
 }
@@ -27,13 +27,13 @@
 }
 
 .loading__anim {
-    width: 35px;
-    height: 35px;
+    width: 100px;
+    height: 100px;
     display: inline-block;
     text-align: center;
-    border: 5px solid rgba(189,189,189 ,0.25);
-    border-left-color: rgba(3,155,229 ,1);
-    border-top-color: rgba(3,155,229 ,1);
+    border: 10px solid rgba(189, 189, 189, 0.25);
+    border-left-color: rgba(3, 155, 229, 1);
+    border-top-color: rgba(3, 155, 229, 1);
     border-radius: 50%;
     animation-name: rotate;
     animation-duration: 2s;
@@ -60,4 +60,8 @@
 .footer {
     text-align: center;
 
+}
+
+body {
+    background-image: url("../img/theater background.jpg");
 }

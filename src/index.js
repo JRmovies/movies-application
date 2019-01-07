@@ -10,13 +10,17 @@ sayHello('World');
  */
 const {getMovies, addMovie, deleteMovie} = require('./api.js');
 
-// On page load:
-//
-// Make an ajax request to get a listing of all the movies
-// When the initial ajax request comes back, remove the "loading..." message and replace it with html generated from the json response your code receives
+
+//-----------------------------------------------On page load:--------------------------------------------------------//
+//---------------------------Make an ajax request to get a listing of all the movies----------------------------------//
+//----------------------When the initial ajax request comes back, remove the "loading..."-----------------------------//
+//--------------message and replace it with html generated from the json response your code receives------------------//
+
+
     getMovies().then((movies) => {
         renderMovies (movies);
         console.table(movies);
+        $('#forms').show()
     }).catch((error) => {
         alert('Oh no! Something went wrong.\nCheck the console for details.');
         console.log(error);
@@ -29,11 +33,11 @@ function renderMovies (movies) {
             $('#movies').append(
             `<div class="card">
                 <div class="card-body">
-                <h5 class="card-title">${title}</h5>
-            <p class="card-text">ID # ${id}</p>
-            <p class="card-text">Rating: ${rating}</p>
-            <button class="delete btn btn-primary" value="${id}">Delete</button>
-            </div>
+                    <h5 class="card-title">${title}</h5>
+                        <p class="card-text">ID # ${id}</p>
+                        <p class="card-text">Rating: ${rating}</p>
+                    <button class="delete btn btn-primary" value="${id}">Delete</button>
+                </div>
             </div>`)
         });
 }
@@ -42,19 +46,18 @@ function appendMovie(movie) {
     const {id, title, rating} = movie;
     $('#movies').append(
         `<div class="card">
-                <div class="card-body">
+             <div class="card-body">
                 <h5 class="card-title">${title}</h5>
-            <p class="card-text">ID # ${id}</p>
-            <p class="card-text">Rating: ${rating}</p>
-            <button class="delete btn btn-primary" value="${id}">Delete</button>
+                    <p class="card-text">ID # ${id}</p>
+                    <p class="card-text">Rating: ${rating}</p>
+                <button class="delete btn btn-primary" value="${id}">Delete</button>
             </div>
-            </div>`);
+         </div>`);
 }
 
-// Allow users to add new movies
-//
-// Create a form for adding a new movie that has fields for the movie's title and rating
-// When the form is submitted, the page should not reload / refresh, instead, your javascript should make a POST request to /api/movies with the information the user put into the form
+
+//-------------------------------------------------ADD A MOVIE--------------------------------------------------------//
+
 
 function addAMovie() {
     const newMovie = {title: newTitle.value, rating: newRating.value};
@@ -68,10 +71,9 @@ function addAMovie() {
         });
 }
 
-// Delete movies
-//
-// Each movie should have a "delete" button
-// When this button is clicked, your javascript should send a DELETE request
+
+//-----------------------------------------------DELETE A MOVIE-------------------------------------------------------//
+
 
 function deleteAMovie(num) {
     const {id} = num;
@@ -88,48 +90,68 @@ function deleteAMovie(num) {
         .catch((error) => {
             alert(error);
         })
-};
+}
+
+
+//--------------------------------------------------ADD-SUBMIT--------------------------------------------------------//
+
 
 $('#movieSubmit').click(function(e){
     e.preventDefault();
     addAMovie();
 });
 
+
+//------------------------------------------------DELETE BUTTON-------------------------------------------------------//
+
+
 $('#movies').on('click', '.delete', function (){
     deleteAMovie($(this).val());
 });
 
+
+//-----------------------------------------------------IMDB-----------------------------------------------------------//
+
+
 $('#searchForm').on('submit', function(e){
-   e.preventDefault();
-   let searchText = $('#searchText').val();
+    e.preventDefault();
+    let searchText = $('#searchText').val();
     console.log(searchText);
     searchMovie(searchText);
 });
 
-
-//The search is still not working.  I'm getting the error message that "Something went wrong" back from the server... nothing specific
-//I think I've pulled about the other half of the hair I have left just trying to get this one done right...
-
 function searchMovie(searchText){
     $.ajax({
-    url: 'http://www.omdbapi.com/?s='+ searchText + '&plot=full' + '&apikey=',
+    url: 'http://www.omdbapi.com/?s='+ searchText + '&plot=full' + '&apikey=dd57b49',
     type: 'GET',
     success: function(data){
-        console.table(data);
-    },
-    error: function(){
-        alert(error);
-    }
-});
 
+        /*
+        [Poster, Title, Type, Year, imdbID]
+         */
+
+        var x= $('<ul>');
+        data.Search.forEach(function (v) {
+          x.append($('<li>').append("<a href='https://www.imdb.com/title/" + v.imdbID + "/?ref_=fn_al_tt_1'>" + v.Title + "</a>" + ' ' + v.Year + ' '))
+        });
+            $(document.body).append(x);
+            console.log(data);
+            },
+                error: function(){
+                    alert(error);
+                }
+        });
 }
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+
 
 // Allow users to edit existing movies
 //
 // Give users the option to edit an existing movie
 // A form should be pre-populated with the selected movie's details
 // Like creating a movie, this should not involve any page reloads, instead your javascript code should make an ajax request when the form is submitted.
-
 
 
 //
