@@ -28,7 +28,7 @@ const {getMovies, addMovie, deleteMovie} = require('./api.js');
 
 function renderMovies (movies) {
         $("#movies").html('');
-        $('#loading_screen').html(`<h2>Here are all the movies: </h2>`);
+        $('#loading_screen').html(`<h2>Here are all of the movies: </h2>`);
         movies.forEach(({title, rating, id}) => {
             $('#movies').append(
             `<div class="card">
@@ -157,7 +157,6 @@ function searchMovie(searchText){
 //
 // Bonuses
 // Add a disabled attribute to buttons while their corresponding ajax request is still pending.
-// Show a loading animation instead of just text that says "loading..."
 // Use modals for the creating and editing movie forms
 // Add a genre property to every movie
 // Allow users to sort the movies by rating, title, or genre (if you have it)
